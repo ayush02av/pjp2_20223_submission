@@ -3,6 +3,7 @@ from config import config
 
 from sprites.player import Player
 from sprites.shop import Shop
+from sprites.grass_land import GrassLand
 
 pygame.init()
 pygame.display.set_caption(config.window_title)
@@ -14,6 +15,8 @@ fps = 60
 
 player = Player()
 shop = Shop()
+
+grass_land = GrassLand()
 
 while game:
     # clock.tick(fps)
@@ -30,8 +33,8 @@ while game:
             
     # shop.toggle_shop_state()
 
-    player.animate(time_check)
+    grass_land.animate(time_check)
 
-    window.blit(*player.get_blit())
+    window.blit(*grass_land.get_blit())
     # window.blit(*shop.get_blit())
     pygame.display.update()
