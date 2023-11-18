@@ -6,14 +6,16 @@ class Base:
     def __init__(
         self,
         path: str,
-        position: str,
+        position: tuple,
+        size: tuple,
         speed: int = 10,
         animation_frames: list = [],
         animation_frame_cooldown: int = 200
     ):
-        self.update_visual(path)
+        self.size = size
         self.speed = speed
 
+        self.update_visual(path)
         self.position = self.sprite.get_rect()
         self.position.center = position
 
@@ -39,17 +41,19 @@ class Base:
         
     def move(
         self,
-        direction: list,
-        magnitude: list
+        direction: list
     ):
-        self.position.x += direction[0] * magnitude[0] * self.speed / self.MOVEMENT
-        self.position.y += direction[1] * magnitude[1] * self.speed / self.MOVEMENT
+        if direction[0] != 0 and direction[1] != 0:
+            direction = (direction[0], 0)
+
+        self.position.x += int(direction[0] * self.speed / self.MOVEMENT)
+        self.position.y += int(direction[1] * self.speed / self.MOVEMENT)
     
     def update_visual(
         self,
         path: str
     ):
-        self.sprite = pygame.image.load(f"assets/{path}")
+        self.sprite = pygame.transform.scale(pygame.image.load(f"assets/{path}"), self.size)
     
     def get_visual(self):
         return self.sprite
