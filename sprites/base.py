@@ -9,7 +9,7 @@ class Base:
         position: str,
         speed: int = 10
     ):
-        self.sprite = pygame.image.load(f"assets/{path}")
+        self.update_visual(path)
         self.speed = speed
 
         self.position = self.sprite.get_rect()
@@ -22,6 +22,12 @@ class Base:
     ):
         self.position.x += direction[0] * magnitude[0] * self.speed / self.MOVEMENT
         self.position.y += direction[1] * magnitude[1] * self.speed / self.MOVEMENT
+    
+    def update_visual(
+        self,
+        path: str
+    ):
+        self.sprite = pygame.image.load(f"assets/{path}")
     
     def get_visual(self):
         return self.sprite
