@@ -12,16 +12,21 @@ class Shop(Base):
 
         super().__init__(
             SHOP_CLOSE_SPRITE_PATH,
-            (config.window_size[0] // 2, config.window_size[1] // 2)
+            (450, 50),
+            (80, 80)
         )
     
-    def toggle_shop_state(
-        self
-    ):
+    def open_shop(self):
+        self.update_visual(SHOP_OPEN_SPRITE_PATH)
+        self.shop_state = "OPEN"
+    
+    def close_shop(self):
+        self.update_visual(SHOP_CLOSE_SPRITE_PATH)
+        self.shop_state = "CLOSED"
+    
+    def toggle_shop_state(self):
         if self.shop_state == "CLOSED":
-            self.update_visual(SHOP_OPEN_SPRITE_PATH)
-            self.shop_state = "OPEN"
+            self.open_shop()
         
         elif self.shop_state == "OPEN":
-            self.update_visual(SHOP_CLOSE_SPRITE_PATH)
-            self.shop_state = "CLOSED"
+            self.close_shop()

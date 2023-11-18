@@ -1,9 +1,11 @@
 import pygame
+import random
 from config import config
 
 from sprites.grass_land import GrassLand
 from sprites.barren_land import BarrenLand
 from sprites.player import Player
+from sprites.shop import Shop
 
 pygame.init()
 pygame.display.set_caption(config.window_title)
@@ -25,6 +27,11 @@ farm = [
                 farm_start[0] + (land_size[0] * i),
                 farm_start[1] + (land_size[1] * j)
             )
+        ) if random.choice([0, 1]) == 0 else GrassLand(
+            (
+                farm_start[0] + (land_size[0] * i),
+                farm_start[1] + (land_size[1] * j)
+            )
         )
         for j in range(cols_of_farm)
     ]
@@ -32,6 +39,7 @@ farm = [
 ]
 
 player = Player()
+shop = Shop()
 
 while game:
     fps_check = clock.tick(fps)
@@ -41,10 +49,10 @@ while game:
 
     for row in farm:
         for land in row:
-            # land.animate(time_check)
+            if type(land) == GrassLand:
+                land.animate(time_check)
             window.blit(*land.get_blit())
         
-
     keys = pygame.key.get_pressed()
     player_movement_direction = [0, 0]
 
@@ -63,7 +71,13 @@ while game:
     if player_movement_direction != [0, 0]:
         player.move(tuple(player_movement_direction))
     
+    if player.collides(shop):
+        shop.open_shop()
+    else:
+        shop.close_shop()
+    
     window.blit(*player.get_blit())
+    window.blit(*shop.get_blit())
     pygame.display.update()
     
     for event in pygame.event.get():

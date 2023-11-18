@@ -1,5 +1,8 @@
 import pygame
 
+def mod(a, b):
+    return a - b if a > b else b - a
+
 class Base:
     MOVEMENT = 10
     
@@ -23,6 +26,15 @@ class Base:
         self.animation_frame = 0
         self.animation_frames = animation_frames
         self.animation_frame_cooldown = animation_frame_cooldown
+        
+    def collides(
+        self,
+        other
+    ):
+        ox, oy = other.get_rect().center
+        sx, sy = self.get_rect().center
+        
+        return mod(sx, ox) <= 50 and mod(sy, oy) <= 50
         
     def animate(
         self,

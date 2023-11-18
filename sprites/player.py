@@ -16,5 +16,5 @@ class Player(Base):
                 f"images/player_frame_{i + 1}.png"
                 for i in range(2)
             ],
-            speed = 18
+            speed = 25
         )
